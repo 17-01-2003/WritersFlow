@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, ScrollView, SafeAreaView } from "react-native";
-import { COLOURS } from "../../UI/colour";
+import { COLOURS } from "../../UI/COLOURS";
 
 const Screen = ({ children, scrollable = false }) => {
   return (

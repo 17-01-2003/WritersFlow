@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Screen from "../../Layout/Screen";
-import { COLOURS } from "../../../UI/colour";
+import { COLOURS } from "../../../UI/COLOURS";
 
 const RegistrationScreen = ({ setUser }) => {
   const [email, setEmail] = useState("");
@@ -87,4 +87,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-

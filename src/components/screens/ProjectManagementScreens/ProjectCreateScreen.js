@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Screen from "../../Layout/Screen";
 import { TextInput } from "react-native-gesture-handler";
 
-const ProjectCreateScreeen = () => {
+const ProjectCreateScreen = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const naviagation = useNavigation();
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectCreateScreeen;
+export default ProjectCreateScreen;
