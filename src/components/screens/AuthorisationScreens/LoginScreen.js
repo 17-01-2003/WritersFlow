@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Screen from "../../Layout/Screen";
-import { COLOURS } from "../../../UI/colour";
+import { COLOURS } from "../../../UI/COLOURS";
 
 const LoginScreen = ({ setUser }) => {
   const [email, setEmail] = useState("");
@@ -91,5 +91,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
-  

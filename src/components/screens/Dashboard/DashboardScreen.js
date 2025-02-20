@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Screen from "../../Layout/Screen";
-import { COLOURS } from "../../../UI/colour";
+import { COLOURS } from "../../../UI/COLOURS";
 
 const DashboardScreen = ({ setUser }) => {
   const navigation = useNavigation();
@@ -22,7 +22,7 @@ const DashboardScreen = ({ setUser }) => {
         style={styles.button}
         onPress={() => navigation.navigate("CreateProject")}
       >
-        <Text style={styles.linkText}>Create New Project</Text>
+        <Text style={styles.buttonText}>Create New Project</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   linkText: { color: COLOURS.white, fontSize: 18, fontWeight: "bold" },
 });
 
-<
+export default DashboardScreen;
