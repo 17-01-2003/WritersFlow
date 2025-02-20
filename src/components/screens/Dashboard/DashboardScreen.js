@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   linkText: { color: COLOURS.white, fontSize: 18, fontWeight: "bold" },
 });
 
-export default DashboardScreen;
+<
