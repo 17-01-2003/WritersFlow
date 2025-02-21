@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import Screen from "../../components/Screen";
 import { COLOURS } from "../../../UI/COLOURS";
-import react from "react";
 
 const WritingGoalsScreen = () => {
   const [goal, setGoal] = useState("");
@@ -27,14 +26,14 @@ const WritingGoalsScreen = () => {
         value={goal}
         onChangeText={setGoal}
       />
-      <TouchableOpacity style={styles.button} onPress={handleUpdatesProgress}>
+      <TouchableOpacity style={styles.button} onPress={handleUpdateProgress}>
         <Text style={styles.buttonText}>Update Progress</Text>
       </TouchableOpacity>
 
       <View style={styles.progressContainer}>
         <Text style={styles.progressText}>Progress: {progress}%`</Text>
         <View style={styles.progressBar}>
-          <View style={[styles, progressFill, { width: `${progress}%` }]} />
+          <View style={[styles.progressFill, { width: `${progress}%` }]} />
         </View>
       </View>
     </Screen>
