@@ -14,6 +14,7 @@ import ProjectListScreen from "./src/components/screens/ProjectManagementScreens
 import WritingGoalsScreen from "./src/components/screens/WritingToolsScreens/WritingGoalScreen";
 import TemplatesScreen from "./src/components/screens/WritingToolsScreens/TemplatesScreen";
 import CreativePromptsScreen from "./src/components/screens/WritingToolsScreens/CreativePromptScreen";
+import GoalTrackerScreen from "./src/components/screens/WritingToolsScreens/GoalTrackerScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,11 @@ export default function App() {
                 name="WritingGoals"
                 component={WritingGoalsScreen}
                 options={{ title: "Writing Goals" }}
+              />
+              <Stack.Screen
+                name="GoalTracker"
+                component={GoalTrackerScreen}
+                options={{ title: "Goal Tracker" }}
               />
               <Stack.Screen
                 name="Templates"
