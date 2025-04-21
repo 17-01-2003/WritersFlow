@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Modal,
-  Pressable,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { COLOURS } from "../../../UI/COLOURS";
 import Screen from "../../Layout/Screen";
 
@@ -15,73 +14,61 @@ const templates = [
   {
     title: "Three-Act Structure",
     description: "A classic beginning, middle, and end format.",
-    content: "• Act I: Setup\n• Act II: Confrontation\n• Act III: Resolution",
+    steps: [
+      {
+        title: "Act I: Setup",
+        detail: "Introduce characters, setting, and conflict.",
+      },
+      {
+        title: "Act II: Confrontation",
+        detail: "Develop conflict and stakes.",
+      },
+      {
+        title: "Act III: Resolution",
+        detail: "Resolve the conflict and show the aftermath.",
+      },
+    ],
   },
   {
     title: "Freytag's Pyramid",
     description: "Dramatic structure with rising action and climax.",
-    content:
-      "• Exposition\n• Inciting Incident\n• Rising Action\n• Climax\n• Falling Action\n• Resolution",
-  },
-  {
-    title: "Hero's Journey",
-    description: "Common story arc for adventure and transformation.",
-    content:
-      "• Call to Adventure\n• Trials & Allies\n• Supreme Ordeal\n• Return Changed",
-  },
-  {
-    title: "Save the Cat",
-    description: "Hollywood-style structure focused on emotional beats.",
-    content:
-      "• Opening Image\n• Theme Stated\n• Catalyst\n• Break into Two\n• Dark Night of the Soul\n• Finale",
+    steps: [
+      {
+        title: "Exposition",
+        detail: "Introduce background, characters, and setting.",
+      },
+      { title: "Rising Action", detail: "Events that increase tension." },
+      { title: "Climax", detail: "Turning point with highest tension." },
+      { title: "Falling Action", detail: "Consequences unfold." },
+      { title: "Denouement", detail: "Final resolution and wrap-up." },
+    ],
   },
 ];
 
 const StoryTemplatesScreen = () => {
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const navigation = useNavigation();
 
   return (
     <Screen>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Story Templates</Text>
+        <Text style={styles.header}>Story Templates</Text>
 
         {templates.map((template, index) => (
-          <View key={index} style={styles.card}>
-            <Text style={styles.cardTitle}>{template.title}</Text>
-            <Text style={styles.cardDesc}>{template.description}</Text>
+          <View key={index} style={styles.templateCard}>
+            <Text style={styles.templateTitle}>{template.title}</Text>
+            <Text style={styles.templateDescription}>
+              {template.description}
+            </Text>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setSelectedTemplate(template)}
+              onPress={() =>
+                navigation.navigate("TemplateDetail", { template })
+              }
             >
               <Text style={styles.buttonText}>Use Template</Text>
             </TouchableOpacity>
           </View>
         ))}
-
-        {/* Modal Preview */}
-        <Modal
-          visible={!!selectedTemplate}
-          transparent
-          animationType="fade"
-          onRequestClose={() => setSelectedTemplate(null)}
-        >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>{selectedTemplate?.title}</Text>
-              <ScrollView style={styles.modalContentBox}>
-                <Text style={styles.modalContent}>
-                  {selectedTemplate?.content}
-                </Text>
-              </ScrollView>
-              <Pressable
-                style={styles.closeButton}
-                onPress={() => setSelectedTemplate(null)}
-              >
-                <Text style={styles.buttonText}>Close</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
       </ScrollView>
     </Screen>
   );
@@ -90,30 +77,29 @@ const StoryTemplatesScreen = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    gap: 20,
   },
-  title: {
+  header: {
     fontSize: 24,
     fontWeight: "bold",
     color: COLOURS.primary,
     textAlign: "center",
-    marginBottom: 10,
+    marginBottom: 20,
   },
-  card: {
+  templateCard: {
     backgroundColor: COLOURS.white,
-    padding: 15,
     borderRadius: 10,
-    borderColor: COLOURS.primary,
+    padding: 16,
     borderWidth: 1,
-    elevation: 2,
+    borderColor: COLOURS.primary,
+    marginBottom: 20,
   },
-  cardTitle: {
+  templateTitle: {
     fontSize: 20,
     fontWeight: "bold",
     color: COLOURS.primary,
-    marginBottom: 4,
+    marginBottom: 8,
   },
-  cardDesc: {
+  templateDescription: {
     fontSize: 14,
     color: COLOURS.darkGray,
     marginBottom: 10,
@@ -126,44 +112,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLOURS.white,
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "#000000aa",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  modalContainer: {
-    width: "100%",
-    backgroundColor: COLOURS.white,
-    borderRadius: 12,
-    padding: 20,
-    maxHeight: "80%",
-    elevation: 10,
-  },
-  modalTitle: {
-    fontSize: 20,
     fontWeight: "bold",
-    color: COLOURS.primary,
-    marginBottom: 12,
-    textAlign: "center",
-  },
-  modalContentBox: {
-    marginBottom: 20,
-  },
-  modalContent: {
     fontSize: 16,
-    color: COLOURS.darkGray,
-    lineHeight: 24,
-  },
-  closeButton: {
-    backgroundColor: COLOURS.primary,
-    padding: 14,
-    borderRadius: 8,
-    alignItems: "center",
   },
 });
 
