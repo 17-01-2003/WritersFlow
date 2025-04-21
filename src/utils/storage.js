@@ -20,3 +20,24 @@ export const loadGoals = async () => {
     return [];
   }
 };
+
+const PROJECT_KEY = "@writing_projects";
+
+export const saveProjects = async (projects) => {
+  try {
+    const jsonValue = JSON.stringify(projects);
+    await AsyncStorage.setItem(PROJECT_KEY, jsonValue);
+  } catch (e) {
+    console.error("Failed to save projects", e);
+  }
+};
+
+export const loadProjects = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(PROJECT_KEY);
+    return jsonValue != null ? JSON.parse(jsonValue) : [];
+  } catch (e) {
+    console.error("Failed to load projects", e);
+    return [];
+  }
+};

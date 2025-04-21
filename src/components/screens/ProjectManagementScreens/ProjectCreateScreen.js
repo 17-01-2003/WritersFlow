@@ -1,56 +1,147 @@
 import React, { useState } from "react";
-import { Text, Button, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import { COLOURS } from "../../../UI/COLOURS";
 import Screen from "../../Layout/Screen";
-import { TextInput } from "react-native-gesture-handler";
+import { loadProjects, saveProjects } from "../../../utils/storage";
 
 const ProjectCreateScreen = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const naviagation = useNavigation();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { template } = route.params || {};
 
-  const handleCreateProject = () => {
-    console.log(`Creating project: ${title}`);
-    naviagation.navigate("ProjectList");
+  const [title, setTitle] = useState("");
+  const [genre, setGenre] = useState("");
+  const [notes, setNotes] = useState("");
+  const [structure, setStructure] = useState(template?.steps || []);
+
+  const handleCreate = async () => {
+    const newProject = {
+      id: Date.now().toString(),
+      title,
+      genre,
+      notes,
+      structure,
+      createdAt: new Date().toISOString(),
+    };
+
+    const existing = await loadProjects();
+    const updated = [newProject, ...existing];
+    await saveProjects(updated);
+
+    navigation.goBack();
   };
 
   return (
     <Screen>
-      <Text style={StyleSheet.title}>Create a New Project</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Project Title"
-        value={title}
-        onChangeText={setTitle}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Project Description"
-        value={description}
-        onChangeText={setDescription}
-      />
-      <Button title="Create Project" onPress={handleCreateProject} />
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.header}>Create Project</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Project Title"
+          value={title}
+          onChangeText={setTitle}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Genre"
+          value={genre}
+          onChangeText={setGenre}
+        />
+
+        <TextInput
+          style={[styles.input, { height: 100 }]}
+          placeholder="Notes or Summary"
+          value={notes}
+          onChangeText={setNotes}
+          multiline
+        />
+
+        {structure.length > 0 && (
+          <View style={styles.templateSection}>
+            <Text style={styles.templateHeader}>Structure (from template)</Text>
+            {structure.map((step, index) => (
+              <View key={index} style={styles.stepCard}>
+                <Text style={styles.stepTitle}>{step.title}</Text>
+                <Text style={styles.stepDetail}>{step.detail}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+
+        <TouchableOpacity style={styles.button} onPress={handleCreate}>
+          <Text style={styles.buttonText}>Create Project</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
     padding: 20,
+    gap: 15,
   },
-  title: {
+  header: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    color: COLOURS.primary,
+    textAlign: "center",
+    marginBottom: 10,
   },
   input: {
-    height: 40,
-    borderColor: "#ccc",
+    backgroundColor: COLOURS.white,
+    borderColor: COLOURS.primary,
     borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    height: 50,
+  },
+  templateSection: {
+    marginTop: 20,
+  },
+  templateHeader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: COLOURS.primary,
     marginBottom: 10,
-    padding: 8,
+  },
+  stepCard: {
+    backgroundColor: COLOURS.lightGray,
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+  },
+  stepTitle: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  stepDetail: {
+    fontSize: 14,
+    color: COLOURS.darkGray,
+  },
+  button: {
+    backgroundColor: COLOURS.primary,
+    paddingVertical: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    color: COLOURS.white,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

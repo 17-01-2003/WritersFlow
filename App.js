@@ -15,6 +15,7 @@ import WritingGoalsScreen from "./src/components/screens/WritingToolsScreens/Wri
 import TemplatesScreen from "./src/components/screens/WritingToolsScreens/TemplatesScreen";
 import CreativePromptsScreen from "./src/components/screens/WritingToolsScreens/CreativePromptScreen";
 import GoalTrackerScreen from "./src/components/screens/WritingToolsScreens/GoalTrackerScreen";
+import TemplateDetailScreen from "./src/components/screens/WritingToolsScreens/TemplateDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,6 +64,11 @@ export default function App() {
                 name="Templates"
                 component={TemplatesScreen}
                 options={{ title: "Story Templates" }}
+              />
+              <Stack.Screen
+                name="TemplateDetail"
+                component={TemplateDetailScreen}
+                options={{ title: "Template Detail" }}
               />
               <Stack.Screen
                 name="CreativePrompts"
