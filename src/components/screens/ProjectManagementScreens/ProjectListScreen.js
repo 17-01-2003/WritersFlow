@@ -1,31 +1,81 @@
-import React from "react";
-import { Text, Button, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Screen from "../../Layout/Screen";
-import { TextInput } from "react-native-gesture-handler";
+import { COLOURS } from "../../../UI/COLOURS";
+import { loadProjects } from "../../../utils/storage";
 
 const ProjectListScreen = () => {
-  const naviagation = useNavigation();
+  const navigation = useNavigation();
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const stored = await loadProjects();
+      setProjects(stored);
+    };
+    const unsubscribe = navigation.addListener("focus", fetchProjects);
+    return unsubscribe;
+  }, [navigation]);
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.projectCard}
+      onPress={() => navigation.navigate("ProjectDetail", { project: item })}
+    >
+      <Text style={styles.projectTitle}>{item.title}</Text>
+      <Text style={styles.projectGenre}>{item.genre}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <Screen>
-      <Text style={StyleSheet.title}>Your Writing Projects</Text>
-      <Button
-        title="Your Project Details"
-        onPress={() => naviagation.navigate("ProjectDetail")}
-      />
+      <View style={styles.container}>
+        <Text style={styles.header}>Your Writing Projects</Text>
+        <FlatList
+          data={projects}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={{ gap: 12, paddingBottom: 20 }}
+        />
+      </View>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 20,
   },
-  title: {
+  header: {
     fontSize: 24,
     fontWeight: "bold",
+    color: COLOURS.primary,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  projectCard: {
+    padding: 16,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: COLOURS.primary,
+    backgroundColor: COLOURS.white,
+  },
+  projectTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: COLOURS.primary,
+  },
+  projectGenre: {
+    fontSize: 14,
+    color: COLOURS.darkGray,
+    marginTop: 4,
   },
 });
 

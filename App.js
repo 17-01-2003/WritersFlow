@@ -16,6 +16,7 @@ import TemplatesScreen from "./src/components/screens/WritingToolsScreens/Templa
 import CreativePromptsScreen from "./src/components/screens/WritingToolsScreens/CreativePromptScreen";
 import GoalTrackerScreen from "./src/components/screens/WritingToolsScreens/GoalTrackerScreen";
 import TemplateDetailScreen from "./src/components/screens/WritingToolsScreens/TemplateDetailScreen";
+import EditProjectScreen from "./src/components/screens/ProjectManagementScreens/EditProjectScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -86,6 +87,11 @@ export default function App() {
                 name="ProjectDetail"
                 component={ProjectDetailScreen}
                 options={{ title: "Project Details" }}
+              />
+              <Stack.Screen
+                name="EditProject"
+                component={EditProjectScreen}
+                options={{ title: "Edit Project" }}
               />
               <Stack.Screen
                 name="CreateProject"
