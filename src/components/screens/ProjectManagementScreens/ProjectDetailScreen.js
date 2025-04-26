@@ -54,6 +54,12 @@ const ProjectDetailScreen = () => {
           <TouchableOpacity style={styles.deleteButton} onPress={confirmDelete}>
             <Text style={styles.buttonText}>Delete</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.beginButton}
+            onPress={() => navigation.navigate("WritingEditor", { project })}
+          >
+            <Text style={styles.buttonText}>Begin Writing</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Screen>
@@ -61,62 +67,46 @@ const ProjectDetailScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    gap: 15,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: COLOURS.primary,
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: COLOURS.darkGray,
-    marginBottom: 10,
-  },
-  label: {
-    fontWeight: "bold",
-    color: COLOURS.primary,
-    marginTop: 10,
-  },
-  text: {
-    fontSize: 15,
-    color: COLOURS.darkGray,
-    marginBottom: 10,
-  },
+  container: { padding: 20, gap: 15 },
+  title: { fontSize: 24, fontWeight: "bold", color: COLOURS.primary },
+  subtitle: { fontSize: 16, color: COLOURS.darkGray },
+  label: { fontWeight: "bold", color: COLOURS.primary, marginTop: 10 },
+  text: { fontSize: 15, color: COLOURS.darkGray, marginBottom: 10 },
   stepCard: {
     backgroundColor: COLOURS.lightGray,
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
   },
-  stepTitle: {
-    fontWeight: "bold",
-    fontSize: 16,
-    marginBottom: 4,
-  },
-  stepDetail: {
-    fontSize: 14,
-    color: COLOURS.darkGray,
-  },
+  stepTitle: { fontWeight: "bold", fontSize: 16, marginBottom: 4 },
+  stepDetail: { fontSize: 14, color: COLOURS.darkGray },
   buttonGroup: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 10,
     marginTop: 20,
   },
   editButton: {
     backgroundColor: COLOURS.primary,
-    paddingVertical: 12,
-    paddingHorizontal: 25,
+    padding: 12,
     borderRadius: 10,
+    flexGrow: 1,
+    alignItems: "center",
   },
   deleteButton: {
     backgroundColor: "#ff4d4d",
-    paddingVertical: 12,
-    paddingHorizontal: 25,
+    padding: 12,
     borderRadius: 10,
+    flexGrow: 1,
+    alignItems: "center",
+  },
+  beginButton: {
+    backgroundColor: COLOURS.primary,
+    padding: 12,
+    borderRadius: 10,
+    flexGrow: 1,
+    alignItems: "center",
   },
   buttonText: {
     color: COLOURS.white,
