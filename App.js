@@ -1,13 +1,9 @@
-import React, { useState } from "react";
-import { Button, ActivityIndicator, View } from "react-native";
+import React from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-
-import LoginScreen from "./src/components/screens/AuthorisationScreens/LoginScreen";
-import RegistrationScreen from "./src/components/screens/AuthorisationScreens/RegistrationScreen";
 
 import DashboardScreen from "./src/components/screens/Dashboard/DashboardScreen";
 
@@ -24,13 +20,14 @@ import EditProjectScreen from "./src/components/screens/ProjectManagementScreens
 import ProjectCreateScreen from "./src/components/screens/ProjectManagementScreens/ProjectCreateScreen";
 import WritingEditorScreen from "./src/components/screens/ProjectManagementScreens/WritingEditorScreen";
 
-const AuthStack = createNativeStackNavigator();
+// Create Navigators
 const WritingToolsStack = createNativeStackNavigator();
 const ProjectsStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// Writing Tools Stack Navigator
 const WritingToolsNavigator = () => (
-  <WritingToolsStack.Navigator>
+  <WritingToolsStack.Navigator screenOptions={{ headerShown: true }}>
     <WritingToolsStack.Screen
       name="WritingGoals"
       component={WritingGoalsScreen}
@@ -64,8 +61,9 @@ const WritingToolsNavigator = () => (
   </WritingToolsStack.Navigator>
 );
 
+// Projects Stack Navigator
 const ProjectsNavigator = () => (
-  <ProjectsStack.Navigator>
+  <ProjectsStack.Navigator screenOptions={{ headerShown: true }}>
     <ProjectsStack.Screen
       name="ProjectList"
       component={ProjectListScreen}
@@ -94,62 +92,40 @@ const ProjectsNavigator = () => (
   </ProjectsStack.Navigator>
 );
 
-const MainApp = ({ setUser }) => (
-  <Tab.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ color, size }) => {
-        let iconName;
-        if (route.name === "Dashboard") iconName = "home";
-        else if (route.name === "WritingTools") iconName = "create";
-        else if (route.name === "Projects") iconName = "book";
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-      headerRight: () => (
-        <Button title="Logout" onPress={() => setUser(null)} />
-      ),
-      tabBarActiveTintColor: "#007BFF",
-      tabBarInactiveTintColor: "gray",
-    })}
-  >
-    <Tab.Screen name="Dashboard" component={DashboardScreen} />
-    <Tab.Screen
-      name="WritingTools"
-      component={WritingToolsNavigator}
-      options={{ title: "Writing Tools" }}
-    />
-    <Tab.Screen name="Projects" component={ProjectsNavigator} />
-  </Tab.Navigator>
-);
-
+// Main App
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  if (loading) {
-    return (
-      <GestureHandlerRootView
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
-        <ActivityIndicator size="large" color="#007BFF" />
-      </GestureHandlerRootView>
-    );
-  }
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        {user ? (
-          <MainApp setUser={setUser} />
-        ) : (
-          <AuthStack.Navigator>
-            <AuthStack.Screen name="Login" options={{ headerShown: false }}>
-              {(props) => <LoginScreen {...props} setUser={setUser} />}
-            </AuthStack.Screen>
-            <AuthStack.Screen name="Register" options={{ headerShown: false }}>
-              {(props) => <RegistrationScreen {...props} setUser={setUser} />}
-            </AuthStack.Screen>
-          </AuthStack.Navigator>
-        )}
+        <Tab.Navigator
+          initialRouteName="Dashboard"
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              let iconName;
+              if (route.name === "Dashboard") iconName = "home";
+              else if (route.name === "WritingTools") iconName = "create";
+              else if (route.name === "Projects") iconName = "book";
+              else if (route.name === "NewProject") iconName = "add-circle"; // ➕ New Project
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: "#007BFF",
+            tabBarInactiveTintColor: "gray",
+            headerShown: false,
+          })}
+        >
+          <Tab.Screen name="Dashboard" component={DashboardScreen} />
+          <Tab.Screen
+            name="WritingTools"
+            component={WritingToolsNavigator}
+            options={{ title: "Writing Tools" }}
+          />
+          <Tab.Screen name="Projects" component={ProjectsNavigator} />
+          <Tab.Screen
+            name="NewProject"
+            component={ProjectCreateScreen}
+            options={{ title: "New Project" }}
+          />
+        </Tab.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
   );
