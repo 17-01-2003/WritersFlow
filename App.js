@@ -20,12 +20,10 @@ import EditProjectScreen from "./src/components/screens/ProjectManagementScreens
 import ProjectCreateScreen from "./src/components/screens/ProjectManagementScreens/ProjectCreateScreen";
 import WritingEditorScreen from "./src/components/screens/ProjectManagementScreens/WritingEditorScreen";
 
-// Create Navigators
 const WritingToolsStack = createNativeStackNavigator();
 const ProjectsStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Writing Tools Stack Navigator
 const WritingToolsNavigator = () => (
   <WritingToolsStack.Navigator screenOptions={{ headerShown: true }}>
     <WritingToolsStack.Screen
@@ -61,7 +59,6 @@ const WritingToolsNavigator = () => (
   </WritingToolsStack.Navigator>
 );
 
-// Projects Stack Navigator
 const ProjectsNavigator = () => (
   <ProjectsStack.Navigator screenOptions={{ headerShown: true }}>
     <ProjectsStack.Screen
@@ -92,7 +89,6 @@ const ProjectsNavigator = () => (
   </ProjectsStack.Navigator>
 );
 
-// Main App
 const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
