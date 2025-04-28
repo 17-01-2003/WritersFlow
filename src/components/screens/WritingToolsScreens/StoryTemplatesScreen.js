@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLOURS } from "../../../UI/COLOURS";
-import { storyTemplates } from "../../../data/storyTemplates"; // ✅ Import templates
+import { storyTemplates } from "../../../data/storyTemplates";
 import Screen from "../../Layout/Screen";
 
 const StoryTemplatesScreen = () => {

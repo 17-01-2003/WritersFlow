@@ -49,7 +49,7 @@ const TemplateGuidedWritingScreen = () => {
     };
     await saveProjects([newProject, ...projects]);
     Alert.alert("Success", "Your story has been saved!");
-    navigation.navigate("ProjectList"); // back to projects
+    navigation.navigate("ProjectList");
   };
 
   const current = template.steps[currentStep];

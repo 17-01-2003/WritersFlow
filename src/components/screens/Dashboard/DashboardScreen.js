@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import Screen from "../../Layout/Screen";
 import { COLOURS } from "../../../UI/COLOURS";
 
-const DashboardScreen = ({ setUser }) => {
+const DashboardScreen = () => {
   const navigation = useNavigation();
 
   return (
@@ -22,46 +22,49 @@ const DashboardScreen = ({ setUser }) => {
         <View style={styles.cardGroup}>
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("WritingGoals")}
+            onPress={() =>
+              navigation.navigate("WritingTools", { screen: "WritingGoals" })
+            }
           >
             <Text style={styles.cardText}>📊 Writing Goals</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("Templates")}
+            onPress={() =>
+              navigation.navigate("WritingTools", { screen: "StoryTemplates" })
+            }
           >
             <Text style={styles.cardText}>📚 Story Templates</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("CreativePrompts")}
+            onPress={() =>
+              navigation.navigate("WritingTools", { screen: "CreativePrompts" })
+            }
           >
             <Text style={styles.cardText}>✍️ Creative Prompts</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("ProjectList")}
+            onPress={() =>
+              navigation.navigate("Projects", { screen: "ProjectList" })
+            }
           >
             <Text style={styles.cardText}>📂 View Projects</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("CreateProject")}
+            onPress={() =>
+              navigation.navigate("Projects", { screen: "CreateProject" })
+            }
           >
             <Text style={styles.cardText}>➕ Create New Project</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => setUser(null)}
-        >
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
       </ScrollView>
     </Screen>
   );
@@ -103,21 +106,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   cardText: {
-    color: COLOURS.white,
+    color: "#ffffff",
     fontSize: 18,
     fontWeight: "600",
-  },
-  logoutButton: {
-    marginTop: 10,
-    backgroundColor: COLOURS.secondary,
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 10,
-  },
-  logoutText: {
-    color: COLOURS.white,
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
 
